@@ -71,6 +71,15 @@ function resetForm() {
   setMessage('');
 }
 
+function getInitials(name = '') {
+  return name
+    .trim()
+    .split(/\s+/)
+    .slice(0, 2)
+    .map((part) => part.charAt(0).toUpperCase())
+    .join('') || 'C';
+}
+
 function renderContacts() {
   contactCount.textContent = `${contacts.length} ${contacts.length === 1 ? 'registro' : 'registros'}`;
   contactsList.innerHTML = '';
@@ -80,14 +89,19 @@ function renderContacts() {
     const card = document.createElement('article');
     card.className = 'contact-card';
     card.innerHTML = `
-      <div>
-        <h3>${escapeHtml(contact.name)}</h3>
-        <div class="contact-meta">
-          <span>${escapeHtml(contact.email)}</span>
-          <span>${escapeHtml(contact.phone)}</span>
-          ${contact.company ? `<span>${escapeHtml(contact.company)}</span>` : ''}
+      <div class="contact-summary">
+        <div class="contact-avatar" aria-hidden="true">${escapeHtml(getInitials(contact.name))}</div>
+        <div class="contact-content">
+          <div class="contact-title">
+            <h3>${escapeHtml(contact.name)}</h3>
+            ${contact.company ? `<span>${escapeHtml(contact.company)}</span>` : ''}
+          </div>
+          <div class="contact-meta">
+            <span>${escapeHtml(contact.email)}</span>
+            <span>${escapeHtml(contact.phone)}</span>
+          </div>
+          ${contact.notes ? `<p class="contact-notes">${escapeHtml(contact.notes)}</p>` : ''}
         </div>
-        ${contact.notes ? `<p class="contact-notes">${escapeHtml(contact.notes)}</p>` : ''}
       </div>
       <div class="contact-actions">
         <button class="ghost-button" type="button" data-action="edit" data-id="${contact._id}">Editar</button>

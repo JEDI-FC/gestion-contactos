@@ -9,12 +9,13 @@
 <body>
   <main class="app-shell">
     <section class="toolbar">
-      <div>
+      <div class="title-block">
         <p class="eyebrow">CRM personal</p>
         <h1>Gestion de contactos</h1>
+        <p class="toolbar-copy">Administra clientes, proveedores y contactos clave desde una sola vista.</p>
       </div>
       <div class="search-box">
-        <span aria-hidden="true">Buscar</span>
+        <span aria-hidden="true"></span>
         <input id="searchInput" type="search" placeholder="Buscar por nombre, correo, telefono o empresa">
       </div>
     </section>
@@ -22,7 +23,10 @@
     <section class="workspace">
       <aside class="form-panel">
         <div class="panel-heading">
-          <h2 id="formTitle">Nuevo contacto</h2>
+          <div>
+            <h2 id="formTitle">Nuevo contacto</h2>
+            <p>Completa la informacion principal.</p>
+          </div>
           <button id="cancelEditButton" class="ghost-button hidden" type="button">Cancelar</button>
         </div>
 
