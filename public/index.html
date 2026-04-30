@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gestion de Contactos</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <main class="app-shell">
+    <section class="toolbar">
+      <div>
+        <p class="eyebrow">CRM personal</p>
+        <h1>Gestion de contactos</h1>
+      </div>
+      <div class="search-box">
+        <span aria-hidden="true">Buscar</span>
+        <input id="searchInput" type="search" placeholder="Buscar por nombre, correo, telefono o empresa">
+      </div>
+    </section>
+
+    <section class="workspace">
+      <aside class="form-panel">
+        <div class="panel-heading">
+          <h2 id="formTitle">Nuevo contacto</h2>
+          <button id="cancelEditButton" class="ghost-button hidden" type="button">Cancelar</button>
+        </div>
+
+        <form id="contactForm">
+          <input id="contactId" type="hidden">
+
+          <label>
+            Nombre
+            <input id="name" name="name" type="text" minlength="2" required placeholder="Ej. Maria Lopez">
+          </label>
+
+          <label>
+            Correo
+            <input id="email" name="email" type="email" required placeholder="maria@correo.com">
+          </label>
+
+          <label>
+            Telefono
+            <input id="phone" name="phone" type="text" required placeholder="999 888 777">
+          </label>
+
+          <label>
+            Empresa
+            <input id="company" name="company" type="text" placeholder="Empresa o institucion">
+          </label>
+
+          <label>
+            Notas
+            <textarea id="notes" name="notes" rows="4" placeholder="Informacion adicional"></textarea>
+          </label>
+
+          <button id="submitButton" class="primary-button" type="submit">Agregar contacto</button>
+          <p id="formMessage" class="form-message" role="status"></p>
+        </form>
+      </aside>
+
+      <section class="contacts-panel">
+        <div class="panel-heading">
+          <div>
+            <h2>Contactos</h2>
+            <p id="contactCount">0 registros</p>
+          </div>
+          <button id="refreshButton" class="ghost-button" type="button">Actualizar</button>
+        </div>
+
+        <div id="contactsList" class="contacts-list"></div>
+        <div id="emptyState" class="empty-state hidden">
+          <h3>No hay contactos</h3>
+          <p>Agrega tu primer contacto o ajusta la busqueda actual.</p>
+        </div>
+      </section>
+    </section>
+  </main>
+
+  <script src="/script.js"></script>
+</body>
+</html>

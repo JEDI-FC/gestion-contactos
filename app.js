@@ -1,25 +1,36 @@
-const { MongoClient, ServerApiVersion } = require('mongodb');
-const uri = "mongodb+srv://panda:nxVu2kbQm60i4kmV@cluster0.3e0ojbz.mongodb.net/?appName=Cluster0";
+const express = require('express');
+const mongoose = require('mongoose');
+const path = require('path');
+const contactRoutes = require('./routes/contactRoutes');
 
-// Create a MongoClient with a MongoClientOptions object to set the Stable API version
-const client = new MongoClient(uri, {
-  serverApi: {
-    version: ServerApiVersion.v1,
-    strict: true,
-    deprecationErrors: true,
-  }
+const app = express();
+const PORT = process.env.PORT || 3000;
+const MONGODB_URI =
+  process.env.MONGODB_URI ||
+  'mongodb+srv://panda:nxVu2kbQm60i4kmV@cluster0.3e0ojbz.mongodb.net/gestion-contactos?appName=Cluster0';
+
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(express.static(path.join(__dirname, 'public')));
+
+app.use('/api/contacts', contactRoutes);
+
+app.get('/health', (req, res) => {
+  res.json({ status: 'ok', database: mongoose.connection.readyState === 1 ? 'connected' : 'disconnected' });
 });
 
-async function run() {
+async function startServer() {
   try {
-    // Connect the client to the server	(optional starting in v4.7)
-    await client.connect();
-    // Send a ping to confirm a successful connection
-    await client.db("admin").command({ ping: 1 });
-    console.log("Pinged your deployment. You successfully connected to MongoDB!");
-  } finally {
-    // Ensures that the client will close when you finish/error
-    await client.close();
+    await mongoose.connect(MONGODB_URI);
+    console.log('Connected to MongoDB');
+
+    app.listen(PORT, () => {
+      console.log(`Server running on http://localhost:${PORT}`);
+    });
+  } catch (error) {
+    console.error('MongoDB connection error:', error.message);
+    process.exit(1);
   }
 }
-run().catch(console.dir);
+
+startServer();
